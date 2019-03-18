@@ -13,19 +13,39 @@ public class GameScene: SKScene {
     }
     
     
+    public static var choice: String = ""
+    
     
     // 1
-    let player = SKSpriteNode(imageNamed: "tortoise")
     
     var count = 0
     
     let winner = SKLabelNode(fontNamed: "San Francisco")
     
+    var player = SKSpriteNode()
+    
     
     override public func didMove(to view: SKView) {
         
+        
+        switch GameScene.choice {
+        case "Tortoise":
+             player = SKSpriteNode(imageNamed: "tortoise")
+        case "Penguin":
+            player = SKSpriteNode(imageNamed: "monster")
+        case "Dolphin":
+            player = SKSpriteNode(imageNamed: "water")
+        case "Seal":
+            player = SKSpriteNode(imageNamed: "player")
+        default:
+            player = SKSpriteNode(imageNamed: "tortoise")
+        }
+        
+        
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
+        
+        print(GameScene.choice)
         
         // 2
         backgroundColor = SKColor.white
@@ -210,13 +230,13 @@ public class GameScene: SKScene {
         if count > 4 {
             
             print("MUDA TELA")
-            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             if let gameOverScene = GameOverScene(fileNamed: "GameOverScene") {
                 // Set the scale mode to scale to fit the window
                 gameOverScene.scaleMode = .aspectFill
 
                 // Present the scene
-                self.scene?.view?.presentScene(gameOverScene, transition: reveal)
+                self.scene?.view?.presentScene(gameOverScene)
             }
         }
         winner.text = String(count)
