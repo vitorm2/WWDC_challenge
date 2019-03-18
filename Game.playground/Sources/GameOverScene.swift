@@ -15,7 +15,7 @@ public class GameOverScene: SKScene {
         title.text = "You Lose!"
         title.fontSize = 40
         title.fontColor = SKColor.black
-        title.position = CGPoint(x: frame.maxX/2, y: frame.maxY - 80 )
+        title.position = CGPoint(x: frame.midX, y: frame.maxY - 200 )
         addChild(title)
         
         

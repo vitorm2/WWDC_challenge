@@ -13,7 +13,7 @@ public class CharacterSelection: SKScene {
         title.text =  "NOME DO JOGO"
         title.fontSize = 25
         title.fontColor = SKColor.black
-        title.position = CGPoint(x: frame.maxX/2 - title.frame.size.width / 2 , y: frame.maxY - 150)
+        title.position = CGPoint(x: frame.midX, y: frame.maxY - 150)
         addChild(title)
         
         

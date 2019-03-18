@@ -102,20 +102,20 @@ public class GameScene: SKScene {
         monster.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
         // Determine where to spawn the monster along the Y axis
-        let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+        let actualX = random(min: monster.size.height/2, max: size.height - monster.size.height - 20)
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        monster.position = CGPoint(x: actualY, y: size.height + monster.size.height/2)
+        monster.position = CGPoint(x: actualX, y: size.height + monster.size.height/2)
         
         // Add the monster to the scene
         addChild(monster)
         
         // Determine speed of the monster
-        let actualDuration = random(min: CGFloat(1.0), max: CGFloat(3.0))
+        let actualDuration = random(min: CGFloat(3.0), max: CGFloat(5.0))
         
         // Create the actions
-        let actionMove = SKAction.move(to: CGPoint(x: actualY, y: monster.size.height/2),
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: monster.size.height),
                                        duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         monster.run(SKAction.sequence([actionMove, actionMoveDone]))
@@ -125,32 +125,32 @@ public class GameScene: SKScene {
     func addBottle() {
         
         // Create sprite
-        let monster = SKSpriteNode(imageNamed: "water")
+        let bottle = SKSpriteNode(imageNamed: "water")
         
-        monster.physicsBody = SKPhysicsBody(rectangleOf: monster.size) // 1
-        monster.physicsBody?.isDynamic = true // 2
-        monster.physicsBody?.categoryBitMask = PhysicsCategory.monster // 3
-        monster.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
-        monster.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+        bottle.physicsBody = SKPhysicsBody(rectangleOf: bottle.size) // 1
+        bottle.physicsBody?.isDynamic = true // 2
+        bottle.physicsBody?.categoryBitMask = PhysicsCategory.monster // 3
+        bottle.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bottle.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
         // Determine where to spawn the monster along the Y axis
-        let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+        let actualX = random(min: bottle.size.width/2, max: size.width - bottle.size.width - 20)
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        monster.position = CGPoint(x: actualY, y: size.height + monster.size.height/2)
+        bottle.position = CGPoint(x: actualX, y: size.height + bottle.size.height/2)
         
         // Add the monster to the scene
-        addChild(monster)
+        addChild(bottle)
         
         // Determine speed of the monster
-        let actualDuration = random(min: CGFloat(1.0), max: CGFloat(3.0))
+        let actualDuration = random(min: CGFloat(3.0), max: CGFloat(5.0))
         
         // Create the actions
-        let actionMove = SKAction.move(to: CGPoint(x: actualY, y: monster.size.height/2),
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: bottle.size.height),
                                        duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
-        monster.run(SKAction.sequence([actionMove, actionMoveDone]))
+        bottle.run(SKAction.sequence([actionMove, actionMoveDone]))
     }
     
     func addPlayer() {
@@ -165,20 +165,20 @@ public class GameScene: SKScene {
         monster.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
         // Determine where to spawn the monster along the Y axis
-        let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+        let actualX = random(min: monster.size.height/2, max: size.height - monster.size.height - 20)
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        monster.position = CGPoint(x: actualY, y: size.height + monster.size.height/2)
+        monster.position = CGPoint(x: actualX, y: size.height + monster.size.height/2)
         
         // Add the monster to the scene
         addChild(monster)
         
         // Determine speed of the monster
-        let actualDuration = random(min: CGFloat(1.0), max: CGFloat(3.0))
+        let actualDuration = random(min: CGFloat(3.0), max: CGFloat(5.0))
         
         // Create the actions
-        let actionMove = SKAction.move(to: CGPoint(x: actualY, y: monster.size.height/2),
+        let actionMove = SKAction.move(to: CGPoint(x: actualX, y: monster.size.height),
                                        duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
         monster.run(SKAction.sequence([actionMove, actionMoveDone]))
