@@ -13,7 +13,7 @@ public class CharacterSelection: SKScene {
         title.text =  "NOME DO JOGO"
         title.fontSize = 25
         title.fontColor = SKColor.black
-        title.position = CGPoint(x: frame.maxX / 2, y: frame.maxY - 150)
+        title.position = CGPoint(x: frame.maxX/2 - title.frame.size.width / 2 , y: frame.maxY - 150)
         addChild(title)
         
         
@@ -21,23 +21,23 @@ public class CharacterSelection: SKScene {
         label.text =  "Choose your Character:"
         label.fontSize = 15
         label.fontColor = SKColor.black
-        label.position = CGPoint(x: 100, y: frame.maxY - 280)
+        label.position = CGPoint(x: label.frame.size.width / 2 + 50, y: frame.maxY/2 - 100)
         addChild(label)
         
         let tortoise = SKSpriteNode(imageNamed: "tortoiseSelect")
-        tortoise.position = CGPoint(x: 50, y: frame.maxY - 380)
+        tortoise.position = CGPoint(x: tortoise.frame.size.width / 2 + 100 , y: frame.maxY/2 - 200)
         addChild(tortoise)
         
         let penguin = SKSpriteNode(imageNamed: "penguinSelect")
-        penguin.position = CGPoint(x: 150, y: frame.maxY - 380)
+        penguin.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + 70, y: frame.maxY/2 - 200)
         addChild(penguin)
         
         let dolphin = SKSpriteNode(imageNamed: "dolphinSelect")
-        dolphin.position = CGPoint(x: 270, y: frame.maxY - 380)
+        dolphin.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + dolphin.frame.size.width + 70, y: frame.maxY/2 - 200)
         addChild(dolphin)
         
         let seal = SKSpriteNode(imageNamed: "sealSelect")
-        seal.position = CGPoint(x: 420, y: frame.maxY - 380)
+        seal.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + dolphin.frame.size.width + seal.frame.size.width + 100, y: frame.maxY/2 - 200)
         addChild(seal)
         
         // X = 16 -  81 / 118 - 178 / 196 - 346/ 363 - 487
@@ -65,10 +65,12 @@ public class CharacterSelection: SKScene {
         }
         let touchLocation = touch.location(in: self)
         
+        print(touchLocation)
         
-        if touchLocation.y >= 62 && touchLocation.y <= 180 {
+        
+        if touchLocation.y >= 250 && touchLocation.y <= 375 {
     
-            if touchLocation.x >= 16 && touchLocation.x <= 81 {
+            if touchLocation.x >= 107 && touchLocation.x <= 201 {
             
                 
                 if let gameScene = GameScene(fileNamed: "GameScene") {
@@ -83,7 +85,7 @@ public class CharacterSelection: SKScene {
                 }
                 
                 
-            } else if  touchLocation.x >= 118 && touchLocation.x <= 178 {
+            } else if  touchLocation.x >= 225 && touchLocation.x <= 319 {
             
                 if let gameScene = GameScene(fileNamed: "GameScene") {
                     
@@ -96,7 +98,7 @@ public class CharacterSelection: SKScene {
                     self.scene?.view?.presentScene(gameScene)
                     
                 }
-            } else if  touchLocation.x >= 196 && touchLocation.x <= 346 {
+            } else if  touchLocation.x >= 350 && touchLocation.x <= 513 {
                
                 if let gameScene = GameScene(fileNamed: "GameScene") {
                     
@@ -109,7 +111,7 @@ public class CharacterSelection: SKScene {
                     self.scene?.view?.presentScene(gameScene)
                 }
                 
-            } else if  touchLocation.x >= 363 && touchLocation.x <= 487 {
+            } else if  touchLocation.x >= 540 && touchLocation.x <= 679 {
                 
                 if let gameScene = GameScene(fileNamed: "GameScene") {
                     

@@ -45,7 +45,7 @@ public class GameScene: SKScene {
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
         
-        print(GameScene.choice)
+//        print(GameScene.choice)
         
         // 2
         backgroundColor = SKColor.white
@@ -193,9 +193,9 @@ public class GameScene: SKScene {
         let touchLocation = touch.location(in: self)
         
         // ESQUERDA
-        if touchLocation.x < 250 {
+        if touchLocation.x < frame.midX {
             
-            var moveTo = player.position.x - 50
+            var moveTo = player.position.x - 100
             if moveTo < 0 || moveTo < 50 {
                 moveTo = 50
             }
@@ -207,9 +207,9 @@ public class GameScene: SKScene {
             // DIREITA
         else {
             
-            var moveTo = player.position.x + 50
-            if moveTo > 500 || moveTo > 450 {
-                moveTo = 450
+            var moveTo = player.position.x + 100
+            if moveTo > 700 || moveTo > 750 {
+                moveTo = 700
             }
             
             
@@ -227,9 +227,7 @@ public class GameScene: SKScene {
         
         count = count + 1
         
-        if count > 4 {
-            
-            print("MUDA TELA")
+        if count >= 1 {
             //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             if let gameOverScene = GameOverScene(fileNamed: "GameOverScene") {
                 // Set the scale mode to scale to fit the window
@@ -259,17 +257,17 @@ extension GameScene: SKPhysicsContactDelegate {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
             
-            if contact.bodyA.categoryBitMask == PhysicsCategory.player {
-                print("Player")
-            }
-            
-            if contact.bodyA.categoryBitMask == PhysicsCategory.monster {
-                print("Monster")
-            }
-            
-            if contact.bodyA.categoryBitMask == PhysicsCategory.water {
-                print("Water")
-            }
+//            if contact.bodyA.categoryBitMask == PhysicsCategory.player {
+//                print("Player")
+//            }
+//
+//            if contact.bodyA.categoryBitMask == PhysicsCategory.monster {
+//                print("Monster")
+//            }
+//
+//            if contact.bodyA.categoryBitMask == PhysicsCategory.water {
+//                print("Water")
+//            }
         } else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
