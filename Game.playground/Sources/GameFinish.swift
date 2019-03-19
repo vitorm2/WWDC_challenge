@@ -1,9 +1,9 @@
 import Foundation
 import SpriteKit
 
-public class GameOverScene: SKScene {
+public class GameFinish: SKScene {
     
-  
+    
     override public func didMove(to view: SKView) {
         
         // 1
@@ -13,7 +13,7 @@ public class GameOverScene: SKScene {
         
         // 3
         let title = SKLabelNode(fontNamed: "Chalkduster")
-        title.text = "You Lose!"
+        title.text = "You Win!"
         title.fontSize = 40
         title.fontColor = SKColor.black
         title.position = CGPoint(x: frame.midX, y: frame.maxY - 200 )
@@ -21,7 +21,7 @@ public class GameOverScene: SKScene {
         
         
         let tryAgain = SKLabelNode(fontNamed: "Chalkduster")
-        tryAgain.text = "Try Again"
+        tryAgain.text = "Play Again"
         tryAgain.fontSize = 20
         tryAgain.fontColor = SKColor.black
         tryAgain.position = CGPoint(x: tryAgain.frame.size.width / 2 + 50 , y: frame.maxY/2 + 50 )
@@ -34,7 +34,7 @@ public class GameOverScene: SKScene {
         chooseCharacter.position = CGPoint(x: chooseCharacter.frame.size.width / 2 + 50, y: (frame.maxY/2) - 50)
         addChild(chooseCharacter)
         
-}
+    }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // 1 - Choose one of the touches to work with
@@ -43,16 +43,11 @@ public class GameOverScene: SKScene {
         }
         let touchLocation = touch.location(in: self)
         
-        
-        print(touchLocation)
-        
         // Try Again
         if touchLocation.x > 44 && touchLocation.x < 180 &&
             touchLocation.y > 545 && touchLocation.y < 591 {
             
             if let gameScene = GameScene(fileNamed: "GameScene") {
-                
-                GameScene.choice = "Tortoise"
                 
                 // Set the scale mode to scale to fit the window
                 gameScene.scaleMode = .aspectFill
@@ -60,12 +55,12 @@ public class GameOverScene: SKScene {
                 // Present the scene
                 self.scene?.view?.presentScene(gameScene)
             }
-        
+            
         }
-        // Choose Another character
+            // Choose Another character
         else if touchLocation.x > 44 && touchLocation.x < 367 &&
             touchLocation.y > 442 && touchLocation.y < 496 {
-    
+            
             if let characterSelection = CharacterSelection(fileNamed: "CharacterSelection") {
                 
                 // Set the scale mode to scale to fit the window
@@ -78,5 +73,5 @@ public class GameOverScene: SKScene {
         }
         
     }
-
+    
 }
