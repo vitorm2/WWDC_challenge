@@ -21,24 +21,21 @@ public class CharacterSelection: SKScene {
         label.text =  "Choose your Character:"
         label.fontSize = 15
         label.fontColor = SKColor.black
-        label.position = CGPoint(x: label.frame.size.width / 2 + 50, y: frame.maxY/2 - 100)
+        label.position = CGPoint(x: label.frame.size.width / 2 + 50, y: frame.maxY/2 - 50)
         addChild(label)
         
         let tortoise = SKSpriteNode(imageNamed: "tortoiseSelect")
-        tortoise.position = CGPoint(x: tortoise.frame.size.width / 2 + 100 , y: frame.maxY/2 - 200)
+        tortoise.position = CGPoint(x: tortoise.frame.size.width / 2 + 50 , y: frame.maxY/2 - 200)
         addChild(tortoise)
         
         let penguin = SKSpriteNode(imageNamed: "penguinSelect")
-        penguin.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + 70, y: frame.maxY/2 - 200)
+        penguin.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + 40, y: frame.maxY/2 - 200)
         addChild(penguin)
         
         let dolphin = SKSpriteNode(imageNamed: "dolphinSelect")
-        dolphin.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + dolphin.frame.size.width + 70, y: frame.maxY/2 - 200)
+        dolphin.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + dolphin.frame.size.width + 100, y: frame.maxY/2 - 200)
         addChild(dolphin)
         
-        let seal = SKSpriteNode(imageNamed: "sealSelect")
-        seal.position = CGPoint(x: tortoise.frame.size.width + penguin.frame.size.width + dolphin.frame.size.width + seal.frame.size.width + 100, y: frame.maxY/2 - 200)
-        addChild(seal)
         
         // X = 16 -  81 / 118 - 178 / 196 - 346/ 363 - 487
         
@@ -68,9 +65,9 @@ public class CharacterSelection: SKScene {
         print(touchLocation)
         
         
-        if touchLocation.y >= 250 && touchLocation.y <= 375 {
+        if touchLocation.y >= 214 && touchLocation.y <= 431 {
     
-            if touchLocation.x >= 107 && touchLocation.x <= 201 {
+            if touchLocation.x >= 38 && touchLocation.x <= 261 {
             
                 
                 if let gameScene = GameScene(fileNamed: "GameScene") {
@@ -85,7 +82,7 @@ public class CharacterSelection: SKScene {
                 }
                 
                 
-            } else if  touchLocation.x >= 225 && touchLocation.x <= 319 {
+            } else if  touchLocation.x >= 280 && touchLocation.x <= 472 {
             
                 if let gameScene = GameScene(fileNamed: "GameScene") {
                     
@@ -98,7 +95,7 @@ public class CharacterSelection: SKScene {
                     self.scene?.view?.presentScene(gameScene)
                     
                 }
-            } else if  touchLocation.x >= 350 && touchLocation.x <= 513 {
+            } else if  touchLocation.x >= 500 && touchLocation.x <= 660 {
                
                 if let gameScene = GameScene(fileNamed: "GameScene") {
                     
@@ -111,20 +108,7 @@ public class CharacterSelection: SKScene {
                     self.scene?.view?.presentScene(gameScene)
                 }
                 
-            } else if  touchLocation.x >= 540 && touchLocation.x <= 679 {
-                
-                if let gameScene = GameScene(fileNamed: "GameScene") {
-                    
-                    GameScene.choice = "Seal"
-                    
-                    // Set the scale mode to scale to fit the window
-                    gameScene.scaleMode = .aspectFill
-                    
-                    // Present the scene
-                    self.scene?.view?.presentScene(gameScene)
-                }
-                
-            }
+            } 
             
         }
         

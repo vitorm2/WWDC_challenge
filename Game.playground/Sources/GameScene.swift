@@ -18,6 +18,8 @@ public class GameScene: SKScene {
     public static var choice: String = ""
     
     
+    var ground = SKSpriteNode()
+
     // 1
     
     var isFinish = false
@@ -27,20 +29,21 @@ public class GameScene: SKScene {
     let winner = SKLabelNode(fontNamed: "San Francisco")
     
     var player = SKSpriteNode()
-    
+    var family = SKSpriteNode()
     
     override public func didMove(to view: SKView) {
+        
+        
+        createGrounds()
         
         
         switch GameScene.choice {
         case "Tortoise":
              player = SKSpriteNode(imageNamed: "tortoise")
         case "Penguin":
-            player = SKSpriteNode(imageNamed: "monster")
+            player = SKSpriteNode(imageNamed: "penguin")
         case "Dolphin":
-            player = SKSpriteNode(imageNamed: "water")
-        case "Seal":
-            player = SKSpriteNode(imageNamed: "player")
+            player = SKSpriteNode(imageNamed: "dolphin")
         default:
             player = SKSpriteNode(imageNamed: "tortoise")
         }
@@ -85,6 +88,14 @@ public class GameScene: SKScene {
         )
     }
     
+    
+    public override func update(_ currentTime: TimeInterval) {
+        moveGrounds()
+    }
+    
+    
+    
+    
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
@@ -96,7 +107,7 @@ public class GameScene: SKScene {
     func addPlasticBag() {
         
         // Create sprite
-        let plasticBag = SKSpriteNode(imageNamed: "monster")
+        let plasticBag = SKSpriteNode(imageNamed: "plasticBag")
         
         plasticBag.physicsBody = SKPhysicsBody(rectangleOf: plasticBag.size) // 1
         plasticBag.physicsBody?.isDynamic = true // 2
@@ -128,7 +139,7 @@ public class GameScene: SKScene {
     func addPlasticBottle() {
         
         // Create sprite
-        let bottle = SKSpriteNode(imageNamed: "water")
+        let bottle = SKSpriteNode(imageNamed: "plasticBottle")
         
         bottle.physicsBody = SKPhysicsBody(rectangleOf: bottle.size) // 1
         bottle.physicsBody?.isDynamic = true // 2
@@ -161,7 +172,7 @@ public class GameScene: SKScene {
         amountMonstersAppers = amountMonstersAppers + 1
         
         // Create sprite
-        let plasticStraw = SKSpriteNode(imageNamed: "player")
+        let plasticStraw = SKSpriteNode(imageNamed: "plasticStraw")
         
         plasticStraw.physicsBody = SKPhysicsBody(rectangleOf: plasticStraw.size) // 1
         plasticStraw.physicsBody?.isDynamic = true // 2
@@ -194,10 +205,10 @@ public class GameScene: SKScene {
             addAnimalFamily()
             
             
-            let actualDuration = random(min: CGFloat(2.0), max: CGFloat(2.0))
-            let actionMove = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY),
+            let actualDuration = random(min: CGFloat(3.0), max: CGFloat(3.0))
+            let actionMove = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY - family.size.height/2),
                                            duration: TimeInterval(actualDuration))
-            player.run(SKAction.sequence([SKAction.wait(forDuration: 5.0), actionMove]))
+            player.run(SKAction.sequence([SKAction.wait(forDuration: 4.0), actionMove]))
         }
     }
     
@@ -205,7 +216,18 @@ public class GameScene: SKScene {
     func addAnimalFamily() {
         
         // Create sprite
-        let family = SKSpriteNode(imageNamed: "tortoise")
+        
+        switch GameScene.choice {
+        case "Tortoise":
+            family = SKSpriteNode(imageNamed: "tortoiseFamily")
+        case "Penguin":
+            family = SKSpriteNode(imageNamed: "penguinFamily")
+        case "Dolphin":
+            family = SKSpriteNode(imageNamed: "dolphinFamily")
+        default:
+            print("default")
+        }
+        
         
         family.physicsBody = SKPhysicsBody(rectangleOf: family.size) // 1
         family.physicsBody?.isDynamic = true // 2
@@ -216,18 +238,18 @@ public class GameScene: SKScene {
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        family.position = CGPoint(x: frame.midX, y: size.height + family.size.height/2)
+        family.position = CGPoint(x: frame.midX, y: size.height + family.size.height/2 + 20)
         
         // Add the monster to the scene
         addChild(family)
         
         // Determine speed of the monster
-        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(2.0))
+        let actualDuration = random(min: CGFloat(3.0), max: CGFloat(3.0))
         
         // Create the actions
-        let actionMove = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY + family.size.height),
+        let actionMove = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY),
                                        duration: TimeInterval(actualDuration))
-        family.run(SKAction.sequence([SKAction.wait(forDuration: 5.0), actionMove]))
+        family.run(SKAction.sequence([SKAction.wait(forDuration: 4.0), actionMove]))
     }
     
     // Movimentacao do player
@@ -290,6 +312,35 @@ public class GameScene: SKScene {
         winner.text = String(count)
     }
     
+    
+    
+    
+    func createGrounds() {
+        
+        print("Create Grounds") 
+        
+        for i in 0...3 {
+            let ground = SKSpriteNode(imageNamed: "background")
+            ground.name = "Ground"
+            ground.size = CGSize(width: (self.scene?.size.width)!, height: (self.scene?.size.height)!)
+            ground.position = CGPoint(x: frame.midX, y: CGFloat(i) * ground.size.height)
+            
+            addChild(ground)
+        }
+    }
+    
+    func moveGrounds() {
+        
+        self.enumerateChildNodes(withName: "Ground", using: ({
+            (node, error) in
+            
+            node.position.y -= 15
+            
+            if node.position.y < -((self.scene?.size.height)!) {
+                node.position.y += (self.scene?.size.height)! * 3
+            }
+        }))
+    }
     
     
 }
