@@ -30,6 +30,7 @@ public class GameScene: SKScene {
     
     var player = SKSpriteNode()
     var family = SKSpriteNode()
+    var enemyInfo = SKSpriteNode()
     
     override public func didMove(to view: SKView) {
         
@@ -265,7 +266,7 @@ public class GameScene: SKScene {
         
         
         // ESQUERDA
-        if touchLocation.x < frame.midX && player.position.y == player.frame.size.height + 20 {
+        if touchLocation.x < frame.midX && player.position.y == player.frame.size.height + 20 && !isPaused {
             
             var moveTo = player.position.x - 100
             if moveTo < 0 || moveTo < 50 {
@@ -277,7 +278,7 @@ public class GameScene: SKScene {
             player.run(SKAction.sequence([actionMove]))
         }
             // DIREITA
-        else if touchLocation.x > frame.midX && player.position.y == player.frame.size.height + 20 {
+        else if touchLocation.x > frame.midX && player.position.y == player.frame.size.height + 20 && !isPaused {
             
             var moveTo = player.position.x + 100
             if moveTo > 700 || moveTo > 750 {
@@ -290,6 +291,15 @@ public class GameScene: SKScene {
                                            duration: TimeInterval(actualDuration))
             player.run(SKAction.sequence([actionMove]))
         }
+        
+        
+        if isPaused && touchLocation.x >= frame.midX {
+            self.scene?.view?.isPaused = false
+            if !enemyInfo.isHidden {
+                enemyInfo.removeFromParent()
+            }
+        }
+        
     }
     
     // ACAO QUANDO ENCOSTA O PLAYER
@@ -360,6 +370,16 @@ extension GameScene: SKPhysicsContactDelegate {
             
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBag {
                 print("Plastic Bag")
+                
+                enemyInfo = SKSpriteNode(imageNamed: "noname")
+                enemyInfo.position = CGPoint(x: frame.midX, y: frame.midY + 100)
+                addChild(enemyInfo)
+                
+                
+                if !enemyInfo.isHidden {
+                    self.scene?.view?.isPaused = true
+                }
+                
             }
 
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBottle {
