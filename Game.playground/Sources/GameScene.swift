@@ -16,7 +16,7 @@ public class GameScene: SKScene {
     
     
     public static var choice: String = ""
-    
+    private var walkFrames: [SKTexture] = []
     
     var ground = SKSpriteNode()
 
@@ -37,26 +37,60 @@ public class GameScene: SKScene {
         
         createGrounds()
         
-        
         switch GameScene.choice {
         case "Tortoise":
-             player = SKSpriteNode(imageNamed: "tortoise")
+            
+            walkFrames = [
+                SKTexture(imageNamed: "tortoise1.png"),
+                SKTexture(imageNamed: "tortoise2.png"),
+                SKTexture(imageNamed: "tortoise3.png"),
+            ]
+            let firstFrameTexture = walkFrames[0]
+            player = SKSpriteNode(texture: firstFrameTexture)
+            
+            
+            
         case "Penguin":
-            player = SKSpriteNode(imageNamed: "penguin")
+            
+            walkFrames = [
+                SKTexture(imageNamed: "penguin1.png"),
+                SKTexture(imageNamed: "penguin2.png"),
+                SKTexture(imageNamed: "penguin3.png"),
+            ]
+            let firstFrameTexture = walkFrames[0]
+            player = SKSpriteNode(texture: firstFrameTexture)
+            
+            
         case "Dolphin":
-            player = SKSpriteNode(imageNamed: "dolphin")
+            
+            walkFrames = [
+                SKTexture(imageNamed: "dolphin1.png"),
+                SKTexture(imageNamed: "dolphin2.png"),
+            ]
+            let firstFrameTexture = walkFrames[0]
+            player = SKSpriteNode(texture: firstFrameTexture)
+            
         default:
-            player = SKSpriteNode(imageNamed: "tortoise")
+            print("Error")
         }
         
         
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
         
-//        print(GameScene.choice)
         
-        // 2
-        backgroundColor = SKColor.white
+        player.position = CGPoint(x: size.width * 0.5, y: player.frame.size.height + 20)
+        
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
+        player.physicsBody?.isDynamic = true
+        player.physicsBody?.categoryBitMask = PhysicsCategory.player
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.plasticBag
+        player.physicsBody?.collisionBitMask = PhysicsCategory.none
+        player.physicsBody?.usesPreciseCollisionDetection = true
+        
+        
+        // 4
+        addChild(player)
         
         
         winner.text = String(count)
@@ -66,19 +100,8 @@ public class GameScene: SKScene {
         
         addChild(winner)
         
-        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
-        player.physicsBody?.isDynamic = true
-        player.physicsBody?.categoryBitMask = PhysicsCategory.player
-        player.physicsBody?.contactTestBitMask = PhysicsCategory.plasticBag
-        player.physicsBody?.collisionBitMask = PhysicsCategory.none
-        player.physicsBody?.usesPreciseCollisionDetection = true
         
-        // 3
-        player.position = CGPoint(x: size.width * 0.5, y: player.frame.size.height + 20)
-        
-        
-        // 4
-        addChild(player)
+        animatePlayer()
         
         run(SKAction.repeat(
             SKAction.sequence([
@@ -89,6 +112,14 @@ public class GameScene: SKScene {
         )
     }
     
+    
+    func animatePlayer() {
+        player.run(SKAction.repeatForever(
+            SKAction.animate(with: walkFrames,
+                             timePerFrame: 0.2,
+                             resize: false,
+                             restore: true)))
+    }
     
     public override func update(_ currentTime: TimeInterval) {
         moveGrounds()
