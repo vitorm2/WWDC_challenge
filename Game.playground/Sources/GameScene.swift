@@ -32,8 +32,13 @@ public class GameScene: SKScene {
     var family = SKSpriteNode()
     var enemyInfo = SKSpriteNode()
     
+    
+    var lastPosition: CGFloat = 0.0
+    
+    
     override public func didMove(to view: SKView) {
         
+        run(SKAction.playSoundFileNamed("selectCharacter.wav", waitForCompletion: false))
         
         createGrounds()
         
@@ -147,8 +152,8 @@ public class GameScene: SKScene {
         plasticBag.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         plasticBag.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
-        // Determine where to spawn the monster along the Y axis
-        let actualX = random(min: plasticBag.size.height/2, max: size.height - plasticBag.size.height - 20)
+        // Determine where to spawn the monster along the X axis
+        let actualX = random(min: plasticBag.size.height/2, max: frame.maxY - plasticBag.size.height - 20)
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
@@ -180,7 +185,7 @@ public class GameScene: SKScene {
         bottle.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
         // Determine where to spawn the monster along the Y axis
-        let actualX = random(min: bottle.size.width/2, max: size.width - bottle.size.width - 20)
+        let actualX = random(min: bottle.size.width/2, max: frame.maxY - bottle.size.width - 20)
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
@@ -213,7 +218,7 @@ public class GameScene: SKScene {
         plasticStraw.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
         // Determine where to spawn the monster along the Y axis
-        let actualX = random(min: plasticStraw.size.height/2, max: size.height - plasticStraw.size.height - 20)
+        let actualX = random(min: plasticStraw.size.height/2, max: frame.maxY - plasticStraw.size.height - 20)
         
         // Position the monster slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
@@ -241,6 +246,8 @@ public class GameScene: SKScene {
             let actionMove = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY - family.size.height/2),
                                            duration: TimeInterval(actualDuration))
             player.run(SKAction.sequence([SKAction.wait(forDuration: 4.0), actionMove]))
+            
+            
         }
     }
     
@@ -375,10 +382,10 @@ public class GameScene: SKScene {
         self.enumerateChildNodes(withName: "Ground", using: ({
             (node, error) in
             
-            node.position.y -= 15
+            node.position.y += self.ground.size.width
             
-            if node.position.y < -((self.scene?.size.height)!) {
-                node.position.y += (self.scene?.size.height)! * 3
+            if node.position.y > ((self.scene?.size.height)!) {
+                node.position.y -= (self.scene?.size.height)! * 3
             }
         }))
     }
@@ -391,6 +398,8 @@ public class GameScene: SKScene {
 // IDENTIFICA O CONTATO
 extension GameScene: SKPhysicsContactDelegate {
     public func didBegin(_ contact: SKPhysicsContact) {
+        
+        
         // 1
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -399,8 +408,13 @@ extension GameScene: SKPhysicsContactDelegate {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
             
+            run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: false))
+            
+            
+            
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBag {
                 print("Plastic Bag")
+                
                 
                 enemyInfo = SKSpriteNode(imageNamed: "noname")
                 enemyInfo.position = CGPoint(x: frame.midX, y: frame.midY + 100)
@@ -408,7 +422,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 
                 
                 if !enemyInfo.isHidden {
-                    self.scene?.view?.isPaused = true
+                  self.scene?.view?.isPaused = true
                 }
                 
             }

@@ -9,7 +9,7 @@ public class GameFinish: SKScene {
         // 1
         backgroundColor = SKColor.white
         
-        // 2
+        run(SKAction.playSoundFileNamed("winSound.wav", waitForCompletion: false))
         
         // 3
         let title = SKLabelNode(fontNamed: "Chalkduster")

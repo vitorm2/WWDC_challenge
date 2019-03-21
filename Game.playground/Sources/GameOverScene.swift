@@ -10,6 +10,8 @@ public class GameOverScene: SKScene {
         backgroundColor = SKColor.white
         
         // 2
+        run(SKAction.playSoundFileNamed("loseGame.wav", waitForCompletion: false))
+        
         
         // 3
         let title = SKLabelNode(fontNamed: "Chalkduster")
@@ -51,8 +53,7 @@ public class GameOverScene: SKScene {
             touchLocation.y > 545 && touchLocation.y < 591 {
             
             if let gameScene = GameScene(fileNamed: "GameScene") {
-                
-                GameScene.choice = "Tortoise"
+            
                 
                 // Set the scale mode to scale to fit the window
                 gameScene.scaleMode = .aspectFill

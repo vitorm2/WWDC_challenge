@@ -6,12 +6,18 @@ public class CharacterSelection: SKScene {
     override public func didMove(to view: SKView) {
         
         // 1
-        backgroundColor = SKColor.white
+        
+        let ground = SKSpriteNode(imageNamed: "background")
+        ground.name = "Ground"
+        ground.size = CGSize(width: (self.scene?.size.width)!, height: (self.scene?.size.height)!)
+        ground.position = CGPoint(x: frame.midX, y: frame.midY)
+        
+        addChild(ground)
         
         // 3
         let title = SKLabelNode(fontNamed: "San Francisco")
         title.text =  "NOME DO JOGO"
-        title.fontSize = 25
+        title.fontSize = 30
         title.fontColor = SKColor.black
         title.position = CGPoint(x: frame.midX, y: frame.maxY - 150)
         addChild(title)
@@ -68,7 +74,7 @@ public class CharacterSelection: SKScene {
         if touchLocation.y >= 214 && touchLocation.y <= 431 {
     
             if touchLocation.x >= 38 && touchLocation.x <= 261 {
-            
+                
                 
                 if let gameScene = GameScene(fileNamed: "GameScene") {
                     

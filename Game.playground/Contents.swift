@@ -13,7 +13,7 @@ if let scene = CharacterSelection(fileNamed: "CharacterSelection") {
     // Present the scene
     sceneView.presentScene(scene)
     sceneView.showsFPS = true
-    sceneView.showsPhysics = true
+    //sceneView.showsPhysics = true
 }
 
 
