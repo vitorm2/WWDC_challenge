@@ -16,6 +16,7 @@ public class GameScene: SKScene {
     
     
     public static var choice: String = ""
+    public static var mk: Bool = false
     private var walkFrames: [SKTexture] = []
     
     var ground = SKSpriteNode()
@@ -114,6 +115,7 @@ public class GameScene: SKScene {
                 SKAction.run(addPlasticStraw), SKAction.wait(forDuration: 0.5)
                 ]), count: 10)
         )
+        
     }
     
     
@@ -388,8 +390,6 @@ public class GameScene: SKScene {
             }
         }))
     }
-    
-    
 }
 
 
