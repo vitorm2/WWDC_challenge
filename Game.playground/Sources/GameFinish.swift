@@ -11,28 +11,12 @@ public class GameFinish: SKScene {
         
         run(SKAction.playSoundFileNamed("winSound.wav", waitForCompletion: false))
         
-        // 3
-        let title = SKLabelNode(fontNamed: "Chalkduster")
-        title.text = "You Win!"
-        title.fontSize = 40
-        title.fontColor = SKColor.black
-        title.position = CGPoint(x: frame.midX, y: frame.maxY - 200 )
-        addChild(title)
+        let ground = SKSpriteNode(imageNamed: "winScene")
+        ground.name = "Ground"
+        ground.size = CGSize(width: (self.scene?.size.width)!, height: (self.scene?.size.height)!)
+        ground.position = CGPoint(x: frame.midX, y: frame.midY)
         
-        
-        let tryAgain = SKLabelNode(fontNamed: "Chalkduster")
-        tryAgain.text = "Play Again"
-        tryAgain.fontSize = 20
-        tryAgain.fontColor = SKColor.black
-        tryAgain.position = CGPoint(x: tryAgain.frame.size.width / 2 + 50 , y: frame.maxY/2 + 50 )
-        addChild(tryAgain)
-        
-        let chooseCharacter = SKLabelNode(fontNamed: "Chalkduster")
-        chooseCharacter.text = "Choose another character"
-        chooseCharacter.fontSize = 20
-        chooseCharacter.fontColor = SKColor.black
-        chooseCharacter.position = CGPoint(x: chooseCharacter.frame.size.width / 2 + 50, y: (frame.maxY/2) - 50)
-        addChild(chooseCharacter)
+        addChild(ground)
         
     }
     
@@ -43,9 +27,11 @@ public class GameFinish: SKScene {
         }
         let touchLocation = touch.location(in: self)
         
+        
+        print(touchLocation)
         // Try Again
         if touchLocation.x > 44 && touchLocation.x < 180 &&
-            touchLocation.y > 545 && touchLocation.y < 591 {
+            touchLocation.y > 524 && touchLocation.y < 610 {
             
             if let gameScene = GameScene(fileNamed: "GameScene") {
                 
@@ -58,8 +44,8 @@ public class GameFinish: SKScene {
             
         }
             // Choose Another character
-        else if touchLocation.x > 44 && touchLocation.x < 367 &&
-            touchLocation.y > 442 && touchLocation.y < 496 {
+        else if touchLocation.x > 44 && touchLocation.x < 545 &&
+            touchLocation.y > 409 && touchLocation.y < 488 {
             
             if let characterSelection = CharacterSelection(fileNamed: "CharacterSelection") {
                 

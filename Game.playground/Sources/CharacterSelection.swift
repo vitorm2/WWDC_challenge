@@ -7,31 +7,15 @@ public class CharacterSelection: SKScene {
         
         // 1
         
-        let ground = SKSpriteNode(imageNamed: "background")
+        let ground = SKSpriteNode(imageNamed: "background2")
         ground.name = "Ground"
         ground.size = CGSize(width: (self.scene?.size.width)!, height: (self.scene?.size.height)!)
         ground.position = CGPoint(x: frame.midX, y: frame.midY)
         
         addChild(ground)
         
-        // 3
-        let title = SKLabelNode(fontNamed: "San Francisco")
-        title.text =  "NOME DO JOGO"
-        title.fontSize = 30
-        title.fontColor = SKColor.black
-        title.position = CGPoint(x: frame.midX, y: frame.maxY - 150)
-        addChild(title)
-        
-        
-        let label = SKLabelNode(fontNamed: "San Francisco")
-        label.text =  "Choose your Character:"
-        label.fontSize = 15
-        label.fontColor = SKColor.black
-        label.position = CGPoint(x: label.frame.size.width / 2 + 50, y: frame.maxY/2 - 50)
-        addChild(label)
-        
         let tortoise = SKSpriteNode(imageNamed: "tortoiseSelect")
-        tortoise.position = CGPoint(x: tortoise.frame.size.width / 2 + 50 , y: frame.maxY/2 - 200)
+        tortoise.position = CGPoint(x: tortoise.frame.size.width / 2 + 50 , y: frame.maxY/2 - 210)
         addChild(tortoise)
         
         let penguin = SKSpriteNode(imageNamed: "penguinSelect")

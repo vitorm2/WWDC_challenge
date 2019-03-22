@@ -13,29 +13,12 @@ public class GameOverScene: SKScene {
         run(SKAction.playSoundFileNamed("loseGame.wav", waitForCompletion: false))
         
         
-        // 3
-        let title = SKLabelNode(fontNamed: "Chalkduster")
-        title.text = "You Lose!"
-        title.fontSize = 40
-        title.fontColor = SKColor.black
-        title.position = CGPoint(x: frame.midX, y: frame.maxY - 200 )
-        addChild(title)
+        let ground = SKSpriteNode(imageNamed: "loseScene")
+        ground.name = "Ground"
+        ground.size = CGSize(width: (self.scene?.size.width)!, height: (self.scene?.size.height)!)
+        ground.position = CGPoint(x: frame.midX, y: frame.midY)
         
-        
-        let tryAgain = SKLabelNode(fontNamed: "Chalkduster")
-        tryAgain.text = "Try Again"
-        tryAgain.fontSize = 20
-        tryAgain.fontColor = SKColor.black
-        tryAgain.position = CGPoint(x: tryAgain.frame.size.width / 2 + 50 , y: frame.maxY/2 + 50 )
-        addChild(tryAgain)
-        
-        let chooseCharacter = SKLabelNode(fontNamed: "Chalkduster")
-        chooseCharacter.text = "Choose another character"
-        chooseCharacter.fontSize = 20
-        chooseCharacter.fontColor = SKColor.black
-        chooseCharacter.position = CGPoint(x: chooseCharacter.frame.size.width / 2 + 50, y: (frame.maxY/2) - 50)
-        addChild(chooseCharacter)
-        
+        addChild(ground)
 }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -49,7 +32,7 @@ public class GameOverScene: SKScene {
         print(touchLocation)
         
         // Try Again
-        if touchLocation.x > 44 && touchLocation.x < 180 &&
+        if touchLocation.x > 69 && touchLocation.x < 269 &&
             touchLocation.y > 545 && touchLocation.y < 591 {
             
             if let gameScene = GameScene(fileNamed: "GameScene") {

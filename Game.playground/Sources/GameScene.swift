@@ -105,7 +105,6 @@ public class GameScene: SKScene {
         
         addChild(winner)
         
-        
         animatePlayer()
         
         run(SKAction.repeat(
@@ -302,6 +301,7 @@ public class GameScene: SKScene {
         // ARREDONDA A POSICAO PARA COMPARACAO
         player.position.y.round()
         
+        print(touchLocation)
         
         // ESQUERDA
         if touchLocation.x < frame.midX && player.position.y == player.frame.size.height + 20 && !isPaused {
@@ -331,7 +331,7 @@ public class GameScene: SKScene {
         }
         
         
-        if isPaused && touchLocation.x >= frame.midX {
+        if isPaused && touchLocation.x > 256 && touchLocation.x < 490 && touchLocation.y > 376 && touchLocation.y < 442 {
             self.scene?.view?.isPaused = false
             if !enemyInfo.isHidden {
                 enemyInfo.removeFromParent()
@@ -352,7 +352,7 @@ public class GameScene: SKScene {
             
             if let gameOverScene = GameOverScene(fileNamed: "GameOverScene") {
                 // Set the scale mode to scale to fit the window
-                gameOverScene.scaleMode = .aspectFill
+                gameOverScene.scaleMode = .aspectFit
                 // Present the scene
                 self.scene?.view?.presentScene(gameOverScene)
             }
@@ -365,16 +365,15 @@ public class GameScene: SKScene {
     
     func createGrounds() {
         
-        print("Create Grounds") 
         
         for i in 0...3 {
             let ground = SKSpriteNode(imageNamed: "background")
             ground.name = "Ground"
             ground.size = CGSize(width: (self.scene?.size.width)!, height: (self.scene?.size.height)!)
             ground.position = CGPoint(x: frame.midX, y: CGFloat(i) * ground.size.height)
-            
             addChild(ground)
         }
+        
     }
     
     func moveGrounds() {
@@ -382,10 +381,10 @@ public class GameScene: SKScene {
         self.enumerateChildNodes(withName: "Ground", using: ({
             (node, error) in
             
-            node.position.y += self.ground.size.width
+            node.position.y -= 15
             
-            if node.position.y > ((self.scene?.size.height)!) {
-                node.position.y -= (self.scene?.size.height)! * 3
+            if node.position.y < -((self.scene?.size.height)!) {
+                node.position.y += (self.scene?.size.height)! * 3
             }
         }))
     }
@@ -408,31 +407,56 @@ extension GameScene: SKPhysicsContactDelegate {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
             
-            run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: false))
+        
             
             
             
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBag {
                 print("Plastic Bag")
                 
-                
-                enemyInfo = SKSpriteNode(imageNamed: "noname")
-                enemyInfo.position = CGPoint(x: frame.midX, y: frame.midY + 100)
-                addChild(enemyInfo)
-                
-                
-                if !enemyInfo.isHidden {
-                  self.scene?.view?.isPaused = true
+                run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
+                    self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBag")
+                    self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+                    self.addChild(self.enemyInfo)
+                    
+                    
+                    if !self.enemyInfo.isHidden {
+                        self.scene?.view?.isPaused = true
+                    }
                 }
+                
+                
                 
             }
 
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBottle {
                 print("Plastic Bottle")
+                
+                run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
+                    self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBottle")
+                    self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+                    self.addChild(self.enemyInfo)
+                    
+                    
+                    if !self.enemyInfo.isHidden {
+                        self.scene?.view?.isPaused = true
+                    }
+                }
             }
 
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticStraw {
                 print("Plastic Straw")
+                
+                run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
+                    self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBottle")
+                    self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+                    self.addChild(self.enemyInfo)
+                    
+                    
+                    if !self.enemyInfo.isHidden {
+                        self.scene?.view?.isPaused = true
+                    }
+                }
             }
             
             if contact.bodyA.categoryBitMask == PhysicsCategory.family {
@@ -440,7 +464,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 
                 if let gameFinish = GameFinish(fileNamed: "GameFinish") {
                     // Set the scale mode to scale to fit the window
-                    gameFinish.scaleMode = .aspectFill
+                    gameFinish.scaleMode = .aspectFit
                     // Present the scene
                     self.scene?.view?.presentScene(gameFinish)
                 }
