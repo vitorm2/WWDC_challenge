@@ -16,7 +16,6 @@ public class GameScene: SKScene {
     
     
     public static var choice: String = ""
-    public static var mk: Bool = false
     private var walkFrames: [SKTexture] = []
     
     var ground = SKSpriteNode()
@@ -27,15 +26,17 @@ public class GameScene: SKScene {
     var amountMonstersAppers = 0
     var count = 0
     
+    var countHeart = 1
+    
     let winner = SKLabelNode(fontNamed: "San Francisco")
     
     var player = SKSpriteNode()
     var family = SKSpriteNode()
     var enemyInfo = SKSpriteNode()
     
-    
-    var lastPosition: CGFloat = 0.0
-    
+     var heart1 = SKSpriteNode()
+     var heart2 = SKSpriteNode()
+     var heart3 = SKSpriteNode()
     
     override public func didMove(to view: SKView) {
         
@@ -99,12 +100,7 @@ public class GameScene: SKScene {
         addChild(player)
         
         
-        winner.text = String(count)
-        winner.fontSize =  30
-        winner.fontColor = SKColor.red
-        winner.position = CGPoint(x: frame.maxX - 50, y: frame.maxY - 50)
-        
-        addChild(winner)
+        addHeart()
         
         animatePlayer()
         
@@ -140,6 +136,42 @@ public class GameScene: SKScene {
     
     func random(min: CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
+    }
+    
+    func addHeart() {
+        heart1 = SKSpriteNode(imageNamed: "heart1")
+        heart1.position = CGPoint(x: frame.maxX - 50, y: frame.maxY - 50)
+        heart2 = SKSpriteNode(imageNamed: "heart1")
+        heart2.position = CGPoint(x: frame.maxX - 100, y: frame.maxY - 50)
+        heart3 = SKSpriteNode(imageNamed: "heart1")
+        heart3.position = CGPoint(x: frame.maxX - 150, y: frame.maxY - 50)
+        
+        
+         addChild(heart1)
+         addChild(heart2)
+         addChild(heart3)
+    }
+    
+    func heartSystem(count: Int) {
+        
+        if count == 1 {
+            heart1.removeFromParent()
+            heart1 = SKSpriteNode(imageNamed: "heart2")
+            heart1.position = CGPoint(x: frame.maxX - 50, y: frame.maxY - 50)
+            addChild(heart1)
+        } else if count == 2 {
+            heart2.removeFromParent()
+            heart2 = SKSpriteNode(imageNamed: "heart2")
+            heart2.position = CGPoint(x: frame.maxX - 100, y: frame.maxY - 50)
+            addChild(heart2)
+        } else if count == 3 {
+            heart3.removeFromParent()
+            heart3 = SKSpriteNode(imageNamed: "heart2")
+            heart3.position = CGPoint(x: frame.maxX - 150, y: frame.maxY - 50)
+            addChild(heart3)
+        }
+        
+        countHeart += 1
     }
     
     func addPlasticBag() {
@@ -179,7 +211,7 @@ public class GameScene: SKScene {
         // Create sprite
         let bottle = SKSpriteNode(imageNamed: "plasticBottle")
         
-        bottle.physicsBody = SKPhysicsBody(rectangleOf: bottle.size) // 1
+        bottle.physicsBody = SKPhysicsBody(rectangleOf: bottle.size)
         bottle.physicsBody?.isDynamic = true // 2
         bottle.physicsBody?.categoryBitMask = PhysicsCategory.plasticBottle // 3
         bottle.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
@@ -303,12 +335,12 @@ public class GameScene: SKScene {
         // ARREDONDA A POSICAO PARA COMPARACAO
         player.position.y.round()
         
-        print(touchLocation)
+        //print(touchLocation)
         
         // ESQUERDA
         if touchLocation.x < frame.midX && player.position.y == player.frame.size.height + 20 && !isPaused {
             
-            var moveTo = player.position.x - 100
+            var moveTo = player.position.x - 80
             if moveTo < 0 || moveTo < 50 {
                 moveTo = 50
             }
@@ -320,7 +352,7 @@ public class GameScene: SKScene {
             // DIREITA
         else if touchLocation.x > frame.midX && player.position.y == player.frame.size.height + 20 && !isPaused {
             
-            var moveTo = player.position.x + 100
+            var moveTo = player.position.x + 80
             if moveTo > 700 || moveTo > 750 {
                 moveTo = 700
             }
@@ -349,7 +381,7 @@ public class GameScene: SKScene {
         
         count = count + 1
         
-        if count >= 5 {
+        if count >= 4 {
             //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             
             if let gameOverScene = GameOverScene(fileNamed: "GameOverScene") {
@@ -359,7 +391,6 @@ public class GameScene: SKScene {
                 self.scene?.view?.presentScene(gameOverScene)
             }
         }
-        winner.text = String(count)
     }
     
     
@@ -403,11 +434,13 @@ extension GameScene: SKPhysicsContactDelegate {
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         
+        
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
             firstBody = contact.bodyA
             secondBody = contact.bodyB
-            
-        
+    
+            print(countHeart)
+            heartSystem(count: countHeart)
             
             
             
@@ -446,6 +479,7 @@ extension GameScene: SKPhysicsContactDelegate {
 
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticStraw {
                 print("Plastic Straw")
+                
                 
                 run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
                     self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBottle")

@@ -41,8 +41,7 @@ public class CharacterSelection: SKScene {
             return
         }
         let touchLocation = touch.location(in: self)
-        
-        print(touchLocation)
+    
         
         
         if touchLocation.y >= 214 && touchLocation.y <= 431 {
@@ -91,6 +90,9 @@ public class CharacterSelection: SKScene {
     }
     
     func showAnimalInfo (character: Character) {
+        
+        
+        run(SKAction.playSoundFileNamed("continueSong.wav", waitForCompletion: false))
         
         switch character {
             case .tortoise:
