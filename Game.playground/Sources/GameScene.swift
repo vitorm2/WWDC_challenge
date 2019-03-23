@@ -19,8 +19,6 @@ public class GameScene: SKScene {
     private var walkFrames: [SKTexture] = []
     
     var ground = SKSpriteNode()
-
-    // 1
     
     var isFinish = false
     var amountMonstersAppers = 0
@@ -37,6 +35,10 @@ public class GameScene: SKScene {
      var heart1 = SKSpriteNode()
      var heart2 = SKSpriteNode()
      var heart3 = SKSpriteNode()
+    
+    var seeThePlasticBag: Bool = false
+    var seeThePlasticBottle: Bool = false
+    var seeThePlasticStraw: Bool = false
     
     override public func didMove(to view: SKView) {
         
@@ -88,15 +90,13 @@ public class GameScene: SKScene {
         
         player.position = CGPoint(x: size.width * 0.5, y: player.frame.size.height + 20)
         
-        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/3)
         player.physicsBody?.isDynamic = true
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
         player.physicsBody?.contactTestBitMask = PhysicsCategory.plasticBag
         player.physicsBody?.collisionBitMask = PhysicsCategory.none
         player.physicsBody?.usesPreciseCollisionDetection = true
         
-        
-        // 4
         addChild(player)
         
         
@@ -176,7 +176,6 @@ public class GameScene: SKScene {
     
     func addPlasticBag() {
         
-        // Create sprite
         let plasticBag = SKSpriteNode(imageNamed: "plasticBag")
         
         plasticBag.physicsBody = SKPhysicsBody(rectangleOf: plasticBag.size) // 1
@@ -185,20 +184,14 @@ public class GameScene: SKScene {
         plasticBag.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         plasticBag.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
-        // Determine where to spawn the monster along the X axis
         let actualX = random(min: plasticBag.size.height/2, max: frame.maxY - plasticBag.size.height - 20)
         
-        // Position the monster slightly off-screen along the right edge,
-        // and along a random position along the Y axis as calculated above
         plasticBag.position = CGPoint(x: actualX, y: size.height + plasticBag.size.height/2)
         
-        // Add the monster to the scene
         addChild(plasticBag)
         
-        // Determine speed of the monster
         let actualDuration = random(min: CGFloat(3.0), max: CGFloat(5.0))
         
-        // Create the actions
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: plasticBag.size.height),
                                        duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
@@ -208,7 +201,6 @@ public class GameScene: SKScene {
     
     func addPlasticBottle() {
         
-        // Create sprite
         let bottle = SKSpriteNode(imageNamed: "plasticBottle")
         
         bottle.physicsBody = SKPhysicsBody(rectangleOf: bottle.size)
@@ -217,20 +209,14 @@ public class GameScene: SKScene {
         bottle.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         bottle.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
-        // Determine where to spawn the monster along the Y axis
         let actualX = random(min: bottle.size.width/2, max: frame.maxY - bottle.size.width - 20)
         
-        // Position the monster slightly off-screen along the right edge,
-        // and along a random position along the Y axis as calculated above
         bottle.position = CGPoint(x: actualX, y: size.height + bottle.size.height/2)
         
-        // Add the monster to the scene
         addChild(bottle)
         
-        // Determine speed of the monster
         let actualDuration = random(min: CGFloat(3.0), max: CGFloat(5.0))
         
-        // Create the actions
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: bottle.size.height),
                                        duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
@@ -241,7 +227,6 @@ public class GameScene: SKScene {
         
         amountMonstersAppers = amountMonstersAppers + 1
         
-        // Create sprite
         let plasticStraw = SKSpriteNode(imageNamed: "plasticStraw")
         
         plasticStraw.physicsBody = SKPhysicsBody(rectangleOf: plasticStraw.size) // 1
@@ -250,20 +235,14 @@ public class GameScene: SKScene {
         plasticStraw.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         plasticStraw.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
-        // Determine where to spawn the monster along the Y axis
         let actualX = random(min: plasticStraw.size.height/2, max: frame.maxY - plasticStraw.size.height - 20)
         
-        // Position the monster slightly off-screen along the right edge,
-        // and along a random position along the Y axis as calculated above
         plasticStraw.position = CGPoint(x: actualX, y: size.height + plasticStraw.size.height/2)
         
-        // Add the monster to the scene
         addChild(plasticStraw)
         
-        // Determine speed of the monster
         let actualDuration = random(min: CGFloat(3.0), max: CGFloat(5.0))
         
-        // Create the actions
         let actionMove = SKAction.move(to: CGPoint(x: actualX, y: plasticStraw.size.height),
                                        duration: TimeInterval(actualDuration))
         let actionMoveDone = SKAction.removeFromParent()
@@ -287,8 +266,6 @@ public class GameScene: SKScene {
     
     func addAnimalFamily() {
         
-        // Create sprite
-        
         switch GameScene.choice {
         case "Tortoise":
             family = SKSpriteNode(imageNamed: "tortoiseFamily")
@@ -307,18 +284,12 @@ public class GameScene: SKScene {
         family.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         family.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
-        
-        // Position the monster slightly off-screen along the right edge,
-        // and along a random position along the Y axis as calculated above
         family.position = CGPoint(x: frame.midX, y: size.height + family.size.height/2 + 20)
         
-        // Add the monster to the scene
         addChild(family)
         
-        // Determine speed of the monster
         let actualDuration = random(min: CGFloat(3.0), max: CGFloat(3.0))
         
-        // Create the actions
         let actionMove = SKAction.move(to: CGPoint(x: frame.midX, y: frame.midY),
                                        duration: TimeInterval(actualDuration))
         family.run(SKAction.sequence([SKAction.wait(forDuration: 4.0), actionMove]))
@@ -326,7 +297,7 @@ public class GameScene: SKScene {
     
     // Movimentacao do player
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 1 - Choose one of the touches to work with
+    
         guard let touch = touches.first else {
             return
         }
@@ -334,8 +305,6 @@ public class GameScene: SKScene {
         
         // ARREDONDA A POSICAO PARA COMPARACAO
         player.position.y.round()
-        
-        //print(touchLocation)
         
         // ESQUERDA
         if touchLocation.x < frame.midX && player.position.y == player.frame.size.height + 20 && !isPaused {
@@ -367,6 +336,9 @@ public class GameScene: SKScene {
         
         if isPaused && touchLocation.x > 256 && touchLocation.x < 490 && touchLocation.y > 376 && touchLocation.y < 442 {
             self.scene?.view?.isPaused = false
+            
+             run(SKAction.playSoundFileNamed("continueSong.wav", waitForCompletion: false))
+            
             if !enemyInfo.isHidden {
                 enemyInfo.removeFromParent()
             }
@@ -376,18 +348,14 @@ public class GameScene: SKScene {
     
     // ACAO QUANDO ENCOSTA O PLAYER
     func playerCollideWithSomething(player: SKSpriteNode, objectContact: SKSpriteNode) {
-        //player.removeFromParent()
-        //monster.removeFromParent()
         
         count = count + 1
         
         if count >= 4 {
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            
+    
             if let gameOverScene = GameOverScene(fileNamed: "GameOverScene") {
-                // Set the scale mode to scale to fit the window
+               
                 gameOverScene.scaleMode = .aspectFit
-                // Present the scene
                 self.scene?.view?.presentScene(gameOverScene)
             }
         }
@@ -397,7 +365,6 @@ public class GameScene: SKScene {
     
     
     func createGrounds() {
-        
         
         for i in 0...3 {
             let ground = SKSpriteNode(imageNamed: "background")
@@ -429,8 +396,6 @@ public class GameScene: SKScene {
 extension GameScene: SKPhysicsContactDelegate {
     public func didBegin(_ contact: SKPhysicsContact) {
         
-        
-        // 1
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         
@@ -442,53 +407,58 @@ extension GameScene: SKPhysicsContactDelegate {
             print(countHeart)
             heartSystem(count: countHeart)
             
-            
-            
-            if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBag {
-                print("Plastic Bag")
+        
+            if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBag{
                 
                 run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
-                    self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBag")
-                    self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
-                    self.addChild(self.enemyInfo)
                     
-                    
-                    if !self.enemyInfo.isHidden {
-                        self.scene?.view?.isPaused = true
+                    if !self.seeThePlasticBag {
+                        self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBag")
+                        self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+                        self.addChild(self.enemyInfo)
+                        
+                        self.seeThePlasticBag = true
+                        
+                        if !self.enemyInfo.isHidden {
+                            self.scene?.view?.isPaused = true
+                        }
                     }
                 }
-                
-                
-                
             }
 
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticBottle {
-                print("Plastic Bottle")
                 
                 run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
-                    self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBottle")
-                    self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
-                    self.addChild(self.enemyInfo)
                     
-                    
-                    if !self.enemyInfo.isHidden {
-                        self.scene?.view?.isPaused = true
+                    if !self.seeThePlasticBottle {
+                        self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBottle")
+                        self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+                        self.addChild(self.enemyInfo)
+                        
+                        self.seeThePlasticBottle = true
+                        
+                        if !self.enemyInfo.isHidden {
+                            self.scene?.view?.isPaused = true
+                        }
                     }
                 }
             }
 
             if contact.bodyA.categoryBitMask == PhysicsCategory.plasticStraw {
-                print("Plastic Straw")
                 
                 
                 run(SKAction.playSoundFileNamed("contact.wav", waitForCompletion: true)) {
-                    self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticBottle")
-                    self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
-                    self.addChild(self.enemyInfo)
                     
-                    
-                    if !self.enemyInfo.isHidden {
-                        self.scene?.view?.isPaused = true
+                    if !self.seeThePlasticStraw {
+                        self.enemyInfo = SKSpriteNode(imageNamed: "infoPlasticStraw")
+                        self.enemyInfo.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+                        self.addChild(self.enemyInfo)
+                        
+                        self.seeThePlasticStraw = true
+                        
+                        if !self.enemyInfo.isHidden {
+                            self.scene?.view?.isPaused = true
+                        }
                     }
                 }
             }
@@ -497,9 +467,8 @@ extension GameScene: SKPhysicsContactDelegate {
                 print("Family")
                 
                 if let gameFinish = GameFinish(fileNamed: "GameFinish") {
-                    // Set the scale mode to scale to fit the window
+
                     gameFinish.scaleMode = .aspectFit
-                    // Present the scene
                     self.scene?.view?.presentScene(gameFinish)
                 }
                 
@@ -509,10 +478,8 @@ extension GameScene: SKPhysicsContactDelegate {
         } else {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
-            //print("Nao sei")
         }
         
-        // 2
         if ((firstBody.categoryBitMask & PhysicsCategory.all != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.player != 0)) {
             if let objectContact = firstBody.node as? SKSpriteNode,

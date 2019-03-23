@@ -3,10 +3,10 @@ import SpriteKit
 
 public class GameFinish: SKScene {
     
+    var youSavedTittle = SKSpriteNode()
     
     override public func didMove(to view: SKView) {
         
-        // 1
         backgroundColor = SKColor.white
         
         run(SKAction.playSoundFileNamed("winSound.wav", waitForCompletion: false))
@@ -18,10 +18,20 @@ public class GameFinish: SKScene {
         
         addChild(ground)
         
+        
+        switch GameScene.choice {
+            case "Tortoise": self.youSavedTittle = SKSpriteNode(imageNamed: "savedAndy")
+            case "Penguin": self.youSavedTittle = SKSpriteNode(imageNamed: "savedMick")
+            case "Dolphin": self.youSavedTittle = SKSpriteNode(imageNamed: "savedKelly")
+            default: print("error")
+        }
+        youSavedTittle.position = CGPoint(x: frame.midX, y: frame.maxY - 250)
+        addChild(youSavedTittle)
+        
     }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 1 - Choose one of the touches to work with
+
         guard let touch = touches.first else {
             return
         }
@@ -29,30 +39,24 @@ public class GameFinish: SKScene {
         
         
         print(touchLocation)
-        // Try Again
-        if touchLocation.x > 44 && touchLocation.x < 180 &&
-            touchLocation.y > 524 && touchLocation.y < 610 {
+        // Play Again
+        if touchLocation.x > 50 && touchLocation.x < 289 &&
+            touchLocation.y > 230 && touchLocation.y < 297 {
             
             if let gameScene = GameScene(fileNamed: "GameScene") {
                 
-                // Set the scale mode to scale to fit the window
-                gameScene.scaleMode = .aspectFill
-                
-                // Present the scene
+                gameScene.scaleMode = .aspectFit
                 self.scene?.view?.presentScene(gameScene)
             }
             
         }
             // Choose Another character
-        else if touchLocation.x > 44 && touchLocation.x < 545 &&
-            touchLocation.y > 409 && touchLocation.y < 488 {
+        else if touchLocation.x > 58 && touchLocation.x < 611 &&
+            touchLocation.y > 111 && touchLocation.y < 171 {
             
             if let characterSelection = CharacterSelection(fileNamed: "CharacterSelection") {
                 
-                // Set the scale mode to scale to fit the window
-                characterSelection.scaleMode = .aspectFill
-                
-                // Present the scene
+                characterSelection.scaleMode = .aspectFit
                 self.scene?.view?.presentScene(characterSelection)
                 
             }

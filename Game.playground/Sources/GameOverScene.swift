@@ -3,13 +3,13 @@ import SpriteKit
 
 public class GameOverScene: SKScene {
     
-  
+    var loseTittle = SKSpriteNode()
+    
     override public func didMove(to view: SKView) {
         
-        // 1
+
         backgroundColor = SKColor.white
         
-        // 2
         run(SKAction.playSoundFileNamed("loseGame.wav", waitForCompletion: false))
         
         
@@ -19,45 +19,54 @@ public class GameOverScene: SKScene {
         ground.position = CGPoint(x: frame.midX, y: frame.midY)
         
         addChild(ground)
+        
+        
+        switch GameScene.choice {
+        case "Tortoise": self.loseTittle = SKSpriteNode(imageNamed: "loseAndy")
+        case "Penguin": self.loseTittle = SKSpriteNode(imageNamed: "loseMick")
+        case "Dolphin": self.loseTittle = SKSpriteNode(imageNamed: "loseKelly")
+        default: print("error")
+        }
+        loseTittle.position = CGPoint(x: frame.midX, y: frame.maxY - 250)
+        addChild(loseTittle)
+        
+        
 }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 1 - Choose one of the touches to work with
+
         guard let touch = touches.first else {
             return
         }
         let touchLocation = touch.location(in: self)
         
         
-        print(touchLocation)
-        
         // Try Again
-        if touchLocation.x > 69 && touchLocation.x < 269 &&
-            touchLocation.y > 545 && touchLocation.y < 591 {
+        if touchLocation.x > 52 && touchLocation.x < 278 &&
+            touchLocation.y > 448 && touchLocation.y < 516 {
             
-            if let gameScene = GameScene(fileNamed: "GameScene") {
-            
-                
-                // Set the scale mode to scale to fit the window
-                gameScene.scaleMode = .aspectFill
-                
-                // Present the scene
-                self.scene?.view?.presentScene(gameScene)
+            run(SKAction.playSoundFileNamed("continueSong.wav", waitForCompletion: true)) {
+                if let gameScene = GameScene(fileNamed: "GameScene") {
+                    
+                    gameScene.scaleMode = .aspectFit
+                    self.scene?.view?.presentScene(gameScene)
+                }
             }
+            
+           
         
         }
         // Choose Another character
-        else if touchLocation.x > 44 && touchLocation.x < 367 &&
-            touchLocation.y > 442 && touchLocation.y < 496 {
+        else if touchLocation.x > 55 && touchLocation.x < 614 &&
+            touchLocation.y > 330 && touchLocation.y < 396 {
     
-            if let characterSelection = CharacterSelection(fileNamed: "CharacterSelection") {
-                
-                // Set the scale mode to scale to fit the window
-                characterSelection.scaleMode = .aspectFill
-                
-                // Present the scene
-                self.scene?.view?.presentScene(characterSelection)
-                
+            
+            run(SKAction.playSoundFileNamed("continueSong.wav", waitForCompletion: true)) {
+                if let characterSelection = CharacterSelection(fileNamed: "CharacterSelection") {
+                    
+                    characterSelection.scaleMode = .aspectFit
+                    self.scene?.view?.presentScene(characterSelection)
+                }
             }
         }
         

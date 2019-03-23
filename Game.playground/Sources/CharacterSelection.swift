@@ -36,7 +36,7 @@ public class CharacterSelection: SKScene {
     }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 1 - Choose one of the touches to work with
+   
         guard let touch = touches.first else {
             return
         }
@@ -68,11 +68,8 @@ public class CharacterSelection: SKScene {
                 characterInfo.removeFromParent()
                 
                 if let gameScene = GameScene(fileNamed: "GameScene") {
-                    
-                    // Set the scale mode to scale to fit the window
-                    gameScene.scaleMode = .aspectFill
-                    
-                    // Present the scene
+                   
+                    gameScene.scaleMode = .aspectFit
                     self.scene?.view?.presentScene(gameScene)
                 }
                 
